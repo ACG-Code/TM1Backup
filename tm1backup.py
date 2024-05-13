@@ -8,25 +8,31 @@ Arguments:
     <source>        TM1 Database Location
     <destination>   Location to place backup files
     <logdir>        Location of TM1 Log files
-    <sevenzip>      Location of 7-Zip Executable
 
 Options:
+    -f              Backup Feeder files
     -k <kn>         Keep <kn> number of backup files
     -l <ln>         Keep <ln> days of Log files
     -h              Show this screen
     --version       Show Version information
+© 2022 Application Consulting Group, Inc.
 """
-
-import logging
+# pyinstaller --onefile -i .\ACG.ico -n TM1Backup --add-binary=".\files\7z.exe;." --add-binary=".\files\7z.dll;." .\tm1backup.py
 import os
+import sys
 import time
 
 from docopt import docopt
 
 from backup_service import BackupService
-from baselogger import logger, APP_NAME
 
+APP_NAME = 'TM1Backup'
 APP_VERSION = "5.0"
+
+if getattr(sys, 'frozen', False):
+    BASE_PATH = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+else:
+    BASE_PATH = r'.\files'
 
 
 def main(args: dict) -> bool:
@@ -36,6 +42,8 @@ def main(args: dict) -> bool:
         source = args.get("<source>")
         destination = args.get("<destination>")
         logdir = args.get("<logdir>")
+        seven = os.path.join(BASE_PATH, '7z.exe')
+        feeders = args.get("-f")
         keep = args.get("-k")
         logs = args.get("-l")
         if not os.path.exists(source):
@@ -44,11 +52,15 @@ def main(args: dict) -> bool:
             raise ValueError(f"Destination path '{destination}' does not exist")
         if not os.path.exists(logdir):
             raise ValueError(f"TM1 Log DIR '{logdir}' does not exist")
+        if not os.path.exists(seven):
+            raise ValueError(f"7-Zip not located at '{seven}'")
         backup_dict = {
             'server': server,
             'source': source,
             'destination': destination,
-            'logdir': logdir
+            'logdir': logdir,
+            'sevenzip': seven,
+            'feeders': feeders
         }
         if keep and logs:
             backup_dict['keep'] = keep
@@ -66,18 +78,17 @@ def main(args: dict) -> bool:
         bkp.backup()
         return True
     except ValueError as v:
-        logging.info(v)
+        print(v)
         return False
 
 
 if __name__ == "__main__":
     start_time = time.perf_counter()
-    cmd_args = docopt(__doc__, version=f"{APP_NAME}, Version: {APP_VERSION}\n© Application Consulting Group")
-    logger.info(f"Starting Backup.  Arguments received from CMD: {cmd_args}")
+    cmd_args = docopt(__doc__, version=f"{APP_NAME}\nVersion: {APP_VERSION}\n© 2022 Application Consulting Group, Inc.")
     success = main(cmd_args)
     if success:
         end_time = time.perf_counter()
-        logger.info(f"Backup complete in {round(end_time - start_time, 2)} seconds.")
+        print(f"Backup complete in {round(end_time - start_time, 2)} seconds.")
     else:
-        logger.info("Errors occurred during backup routine. See logs")
+        print("Errors occurred during backup routine. See logs")
         raise SystemExit
