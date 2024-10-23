@@ -13,6 +13,7 @@ Options:
     -f              Backup Feeder files
     -k <kn>         Keep <kn> number of backup files
     -l <ln>         Keep <ln> days of Log files
+    -z              Use ZIP Format
     -h              Show this screen
     --version       Show Version information
 © 2022 Application Consulting Group, Inc.
@@ -27,7 +28,7 @@ from docopt import docopt
 from backup_service import BackupService
 
 APP_NAME = 'TM1Backup'
-APP_VERSION = "5.0"
+APP_VERSION = "6.1"
 
 if getattr(sys, 'frozen', False):
     BASE_PATH = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -37,7 +38,6 @@ else:
 
 def main(args: dict) -> bool:
     try:
-        backup_dict = {}
         server = args.get("<servername>")
         source = args.get("<source>")
         destination = args.get("<destination>")
@@ -46,6 +46,7 @@ def main(args: dict) -> bool:
         feeders = args.get("-f")
         keep = args.get("-k")
         logs = args.get("-l")
+        _zip = args.get("-z")
         if not os.path.exists(source):
             raise ValueError(f"Source Path '{source}' does not exist")
         if not os.path.exists(destination):
@@ -60,7 +61,8 @@ def main(args: dict) -> bool:
             'destination': destination,
             'logdir': logdir,
             'sevenzip': seven,
-            'feeders': feeders
+            'feeders': feeders,
+            "zip": _zip
         }
         if keep and logs:
             backup_dict['keep'] = keep
