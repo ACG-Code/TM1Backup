@@ -28,7 +28,7 @@ from docopt import docopt
 from backup_service import BackupService
 
 APP_NAME = 'TM1Backup'
-APP_VERSION = "6.0"
+APP_VERSION = "6.1"
 
 if getattr(sys, 'frozen', False):
     BASE_PATH = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +38,6 @@ else:
 
 def main(args: dict) -> bool:
     try:
-        backup_dict = {}
         server = args.get("<servername>")
         source = args.get("<source>")
         destination = args.get("<destination>")

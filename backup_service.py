@@ -68,9 +68,15 @@ class BackupService:
         with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             for root, dirs, files in os.walk(str(source_path)):
                 for file in files:
-                    file_path = os.path.join(root, file)
-                    archive_path = os.path.relpath(file_path, self.source)
-                    zip_file.write(file_path, archive_path)
+                    if self.feeders is False:
+                        if not file.endswith('.feeders'):
+                            file_path = os.path.join(root, file)
+                            archive_path = os.path.relpath(file_path, source_path)
+                            zip_file.write(file_path, archive_path)
+                    else:
+                        file_path = os.path.join(root, file)
+                        archive_path = os.path.relpath(file_path, source_path)
+                        zip_file.write(file_path, archive_path)
 
     @staticmethod
     def clean_dir(path: str, days: int) -> None:
