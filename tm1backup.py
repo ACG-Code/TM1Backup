@@ -3,7 +3,7 @@ Usage:
     TM1Backup <servername> <source> <destination> <logdir> [options]
     TM1Backup (-h | --version)
 
-Arguments:
+Positional Arguments:
     <servername>    TM1 Instance Name
     <source>        TM1 Database Location
     <destination>   Location to place backup files
@@ -28,7 +28,7 @@ from docopt import docopt
 from backup_service import BackupService
 
 APP_NAME = 'TM1Backup'
-APP_VERSION = "6.1"
+APP_VERSION = "6.2.0"
 
 if getattr(sys, 'frozen', False):
     BASE_PATH = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +47,10 @@ def main(args: dict) -> bool:
         keep = args.get("-k")
         logs = args.get("-l")
         _zip = args.get("-z")
+        if _zip:
+            _type = 'zip'
+        else:
+            _type = '7z'
         if not os.path.exists(source):
             raise ValueError(f"Source Path '{source}' does not exist")
         if not os.path.exists(destination):
@@ -62,7 +66,7 @@ def main(args: dict) -> bool:
             'logdir': logdir,
             'sevenzip': seven,
             'feeders': feeders,
-            "zip": _zip
+            "zip": _type
         }
         if keep and logs:
             backup_dict['keep'] = keep

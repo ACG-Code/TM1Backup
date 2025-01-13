@@ -2,7 +2,6 @@ import os
 import subprocess
 from datetime import datetime
 from pathlib import Path
-import zipfile
 
 import arrow
 
@@ -13,7 +12,7 @@ class BackupService:
     """
     def __init__(self, **kwargs):
         self.server = kwargs.get("server")
-        self.source = kwargs.get("source")
+        self.source = f'"{kwargs.get("source")}"'
         self.destination = kwargs.get("destination")
         self.logdir = kwargs.get("logdir")
         self.seven = kwargs.get("sevenzip")
@@ -25,9 +24,7 @@ class BackupService:
         date = datetime.now()
         self.tmst = date.strftime('%Y%m%d%H%M%S')
 
-        # self.source = Path(f'"{self.source}"')
-        self.zipfile = Path(f'"{self.destination}\{self.server}_Backup_{self.tmst}.7z"')
-        # self.seven = Path(f'"{self.seven}"')
+        self.zipfile = fr'"{self.destination}\{self.server}_Backup_{self.tmst}.{self.ZIP}"'
 
         # Output directories
         print(f"Server name: {self.server}")
@@ -37,9 +34,9 @@ class BackupService:
 
         if self.feeders:
             print("Feeder files will be backed up")
-            self.cmd = fr"{self.seven} a {self.zipfile} -t7Z -mmt -mx=1 -- {self.source}"
+            self.cmd = fr'{self.seven} a {self.zipfile} -t{self.ZIP} -mmt -mx=5 -- {self.source}'
         else:
-            self.cmd = fr"{self.seven} a {self.zipfile} -t7Z -mmt -mx=1 -xr!*.FEEDERS -- {self.source}"
+            self.cmd = fr'{self.seven} a {self.zipfile} -t{self.ZIP} -mmt -mx=5 -xr!*.FEEDERS -- {self.source}'
 
         if self.keep:
             print(f"Backup file retention {self.keep}")
@@ -52,31 +49,13 @@ class BackupService:
         :return: None
         """
         print(f"Backing up '{self.source}'")
-        if self.ZIP:
-            print(fr"Backup file to be generated: {self.destination}\{self.server}_Backup_{self.tmst}.zip")
-            self.zip_folder(fr"{self.destination}\{self.server}_Backup_{self.tmst}.zip", source_path=self.source)
-        else:
-            print(f"Backup file to be generated: {self.zipfile}")
-            no_window = 0X08000000
-            subprocess.call(self.cmd, creationflags=no_window)
+        print(f"Backup file to be generated: {self.zipfile}")
+        no_window = 0X08000000
+        subprocess.call(self.cmd, creationflags=no_window)
         if self.keep:
             self.clean_dir(path=self.destination, days=self.keep)
         if self.logs != -99:
             self.clean_logs(logdir=self.logdir, log_days=self.logs)
-
-    def zip_folder(self, output_file: str, source_path: str) -> None:
-        with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-            for root, dirs, files in os.walk(str(source_path)):
-                for file in files:
-                    if self.feeders is False:
-                        if not file.endswith('.feeders'):
-                            file_path = os.path.join(root, file)
-                            archive_path = os.path.relpath(file_path, source_path)
-                            zip_file.write(file_path, archive_path)
-                    else:
-                        file_path = os.path.join(root, file)
-                        archive_path = os.path.relpath(file_path, source_path)
-                        zip_file.write(file_path, archive_path)
 
     @staticmethod
     def clean_dir(path: str, days: int) -> None:
