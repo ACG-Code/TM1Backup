@@ -1,0 +1,10 @@
+# Testing Requirements for TM1 Backup Service
+docopt>=0.6.2
+
+# Testing frameworks
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.1
+
+# Code quality
+coverage>=7.2.0

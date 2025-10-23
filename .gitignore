@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Build
+build/
+dist/
+*.spec
+
+# Logs
+*.log
+*.log.*
+
+# IDE
+.idea/
+.vscode/
+
+# Temporary
+dir.txt
+```
+
+## Summary - Safe to Delete Now
+```
+build/
+dist/TM1Backup.log
+dist/TM1Backup.zip (maybe)
+__pycache__/ (all instances)
+.pytest_cache/ (all instances)
+.coverage
+TM1Backup.log
+TM1Backup.log.2024-02-13
+dir.txt
+.idea/ (if not using PyCharm)
