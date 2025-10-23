@@ -1,0 +1,497 @@
+2022-11-17 13:01:02,947 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-17 13:01:02,949 - TM1Backup - INFO - Server name: chad
+2022-11-17 13:01:02,949 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-17 13:01:02,949 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-17 13:01:02,950 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221117130102.7z"
+2022-11-17 13:01:02,950 - TM1Backup - INFO - Backup file retention 15
+2022-11-17 13:01:02,950 - TM1Backup - INFO - Log file retention 30
+2022-11-17 13:01:02,950 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-17 13:01:03,624 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-17 13:01:03,626 - TM1Backup - INFO - Cleaning complete
+2022-11-17 13:01:03,626 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-17 13:01:03,630 - TM1Backup - INFO - Log cleaning complete
+2022-11-17 13:01:03,631 - TM1Backup - INFO - Backup complete in 0.69 seconds.
+2022-11-23 12:14:42,030 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-23 12:14:42,031 - TM1Backup - INFO - Server name: chad
+2022-11-23 12:14:42,032 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-23 12:14:42,032 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:14:42,032 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123121442.7z"
+2022-11-23 12:14:42,033 - TM1Backup - INFO - Backup file retention 15
+2022-11-23 12:14:42,033 - TM1Backup - INFO - Log file retention 30
+2022-11-23 12:15:59,094 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-23 12:16:32,879 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-23 12:16:32,885 - TM1Backup - INFO - Cleaning complete
+2022-11-23 12:16:34,676 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:16:34,686 - TM1Backup - INFO - Log cleaning complete
+2022-11-23 12:16:39,057 - TM1Backup - INFO - Backup complete in 116.73 seconds.
+2022-11-23 12:17:00,847 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-23 12:17:00,850 - TM1Backup - INFO - Server name: chad
+2022-11-23 12:17:00,850 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-23 12:17:00,851 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:17:00,851 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123121700.7z"
+2022-11-23 12:17:00,852 - TM1Backup - INFO - Backup file retention 15
+2022-11-23 12:17:00,852 - TM1Backup - INFO - Log file retention 30
+2022-11-23 12:17:00,853 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-23 12:17:01,612 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-23 12:17:01,613 - TM1Backup - INFO - Cleaning complete
+2022-11-23 12:17:01,613 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:17:01,614 - TM1Backup - INFO - Log cleaning complete
+2022-11-23 12:17:01,615 - TM1Backup - INFO - Backup complete in 0.77 seconds.
+2022-11-23 12:17:27,492 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-23 12:17:27,492 - TM1Backup - INFO - Server name: chad
+2022-11-23 12:17:27,493 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-23 12:17:27,493 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:17:27,493 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123121727.7z"
+2022-11-23 12:17:27,493 - TM1Backup - INFO - Backup file retention 15
+2022-11-23 12:17:27,493 - TM1Backup - INFO - Log file retention 30
+2022-11-23 12:17:27,494 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-23 12:17:27,809 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-23 12:17:27,810 - TM1Backup - INFO - Cleaning complete
+2022-11-23 12:17:27,810 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:17:27,812 - TM1Backup - INFO - Log cleaning complete
+2022-11-23 12:17:27,812 - TM1Backup - INFO - Backup complete in 0.32 seconds.
+2022-11-23 12:20:08,069 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-23 12:20:08,070 - TM1Backup - INFO - Server name: chad
+2022-11-23 12:20:08,070 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-23 12:20:08,070 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:20:08,070 - TM1Backup - INFO - 7-zip located at "C:\Program Files\7-Zip\7z.exe"
+2022-11-23 12:20:08,070 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123122008.7z"
+2022-11-23 12:20:08,071 - TM1Backup - INFO - Backup file retention 15
+2022-11-23 12:20:08,071 - TM1Backup - INFO - Log file retention 30
+2022-11-23 12:20:08,071 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-23 12:20:08,460 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-23 12:20:08,461 - TM1Backup - INFO - Cleaning complete
+2022-11-23 12:20:08,463 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:20:08,464 - TM1Backup - INFO - Log cleaning complete
+2022-11-23 12:20:08,465 - TM1Backup - INFO - Backup complete in 0.4 seconds.
+2022-11-23 12:20:23,665 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<sevenzip>': 'C:\\Program Files\\7-Zip\\7z.exe',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2022-11-23 12:20:23,666 - TM1Backup - INFO - Server name: chad
+2022-11-23 12:20:23,666 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2022-11-23 12:20:23,666 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:20:23,666 - TM1Backup - INFO - 7-zip located at "C:\Program Files\7-Zip\7z.exe"
+2022-11-23 12:20:23,666 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123122023.7z"
+2022-11-23 12:20:23,667 - TM1Backup - INFO - Backup file retention 15
+2022-11-23 12:20:23,667 - TM1Backup - INFO - Log file retention 30
+2022-11-23 12:20:23,667 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2022-11-23 12:20:24,091 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2022-11-23 12:20:24,093 - TM1Backup - INFO - Cleaning complete
+2022-11-23 12:20:24,093 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2022-11-23 12:20:24,094 - TM1Backup - INFO - Log cleaning complete
+2022-11-23 12:20:24,094 - TM1Backup - INFO - Backup complete in 0.43 seconds.
+2023-04-13 12:10:12,609 - TM1Backup - INFO - Starting backup.  Arguments received from CMD: {'--version': False,
+ '-f': False,
+ '-h': False,
+ '-k': '30',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS Test\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS Test\\Logs',
+ '<server>': 'GLCS Test',
+ '<source>': 'C:\\TM1_Servers\\GLCS Test\\Database'}
+2023-04-13 12:10:36,459 - TM1Backup - INFO - Server name: GLCS Test
+2023-04-13 12:10:36,460 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS Test\Database"
+2023-04-13 12:10:36,460 - TM1Backup - INFO - Destination path: C:\TM1_Servers\GLCS Test\Backups
+2023-04-13 12:10:36,460 - TM1Backup - INFO - 7-zip located at: "C:\Program Files\7-Zip\7z.exe"
+2023-04-13 12:10:36,460 - TM1Backup - INFO - Zip file to be generated: "C:\TM1_Servers\GLCS Test\Backups\GLCS Test_Backup_20230413121012.7z"
+2023-04-13 12:10:36,460 - TM1Backup - INFO - Feeder files will be ignored
+2023-04-13 12:10:36,461 - TM1Backup - INFO - "C:\Program Files\7-Zip\7z.exe" a "C:\TM1_Servers\GLCS Test\Backups\GLCS Test_Backup_20230413121012.7z" -mmt -mx=1 -xr!*FEEDERS -- "C:\TM1_Servers\GLCS Test\Database"
+2023-04-13 12:10:36,461 - TM1Backup - INFO - Backup file retention 30
+2023-04-13 12:10:36,461 - TM1Backup - INFO - Log file retention 30 days
+2023-04-13 12:10:36,461 - TM1Backup - INFO - Beginning backup of "C:\TM1_Servers\GLCS Test\Database"
+2023-04-13 12:10:40,518 - TM1Backup - INFO - Beginning clean of 'C:\TM1_Servers\GLCS Test\Backups'
+2023-04-13 12:10:40,520 - TM1Backup - INFO - Cleaning complete
+2023-04-13 12:10:40,520 - TM1Backup - INFO - Beginning clean of C:\TM1_Servers\GLCS Test\Logs
+2023-04-13 12:10:40,525 - TM1Backup - INFO - Log cleaning complete
+2023-04-13 12:10:40,526 - TM1Backup - INFO - Backup complete in 27.92 seconds
+2023-04-13 12:12:50,242 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:12:50,243 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:12:50,243 - TM1Backup - INFO - Source path: "C:\TM1_Servers\GLCS\Database"
+2023-04-13 12:12:50,243 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:12:50,244 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413121250.7z"
+2023-04-13 12:12:50,244 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:12:50,244 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:12:50,245 - TM1Backup - INFO - Backing up '"C:\TM1_Servers\GLCS\Database"'
+2023-04-13 12:14:38,332 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:14:38,334 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:14:38,334 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413121438.7z
+2023-04-13 12:14:38,335 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:14:54,201 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:14:54,202 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:14:54,203 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:14:54,203 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:14:54,203 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413121454.7z
+2023-04-13 12:14:54,204 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:14:54,204 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:14:54,204 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:31:31,082 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:31:31,084 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:31:31,084 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:31:31,085 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:31:31,085 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413123131.7z
+2023-04-13 12:31:31,086 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:31:31,086 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:31:31,086 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:32:16,491 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:32:16,493 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:32:16,494 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:32:16,495 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:32:16,495 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413123216.7z"
+2023-04-13 12:32:16,496 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:32:16,496 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:32:16,497 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:33:02,266 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:33:02,267 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:33:02,267 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:33:02,267 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:33:02,268 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413123302.7z"
+2023-04-13 12:33:02,268 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:33:02,268 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:33:02,268 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:33:20,125 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Backup file to be generated: "C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413123320.7z"
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:33:20,126 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:33:20,127 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:34:33,963 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:34:33,964 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:34:33,965 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:34:33,965 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:34:33,966 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413123433.7z
+2023-04-13 12:34:33,967 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:34:33,967 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:34:33,967 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:35:07,143 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:35:07,144 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:35:07,144 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:35:07,144 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:35:07,144 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\"chad_Backup_20230413123507.7z"
+2023-04-13 12:35:07,145 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:35:07,145 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:35:07,145 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:37:55,692 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Database\chad_Backup_20230413123755.7z
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:37:55,693 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:37:55,694 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:38:17,985 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:38:17,985 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:38:17,985 - TM1Backup - INFO - Source path: {kwargs.get("source")}
+2023-04-13 12:38:17,986 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:38:17,986 - TM1Backup - INFO - Backup file to be generated: {kwargs.get("source")}\chad_Backup_20230413123817.7z
+2023-04-13 12:38:17,986 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:38:17,986 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:38:17,987 - TM1Backup - INFO - Backing up '{kwargs.get("source")}'
+2023-04-13 12:38:48,105 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:38:48,105 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:38:48,106 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:38:48,106 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:38:48,106 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Database\chad_Backup_20230413123848.7z
+2023-04-13 12:38:48,106 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:38:48,106 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:38:48,107 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:39:02,689 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:39:36,857 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:40:01,331 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:43:12,907 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:43:12,907 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:43:12,907 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:43:12,908 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:43:12,908 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Database\chad_Backup_20230413124312.7z
+2023-04-13 12:43:12,908 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:43:12,908 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:43:12,909 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:43:33,175 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:43:33,176 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:43:33,176 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:43:33,176 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:43:33,177 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413124333.7z
+2023-04-13 12:43:33,177 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:43:33,177 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:43:33,177 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:44:09,575 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '15',
+ '-l': '30',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:44:09,576 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:44:09,576 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:44:09,576 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:44:09,576 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413124409.7z
+2023-04-13 12:44:09,577 - TM1Backup - INFO - Backup file retention 15
+2023-04-13 12:44:09,577 - TM1Backup - INFO - Log file retention 30
+2023-04-13 12:44:09,577 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:44:13,627 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2023-04-13 12:44:13,628 - TM1Backup - INFO - Cleaning complete
+2023-04-13 12:44:13,628 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:44:13,631 - TM1Backup - INFO - Log cleaning complete
+2023-04-13 12:44:13,631 - TM1Backup - INFO - Backup complete in 4.06 seconds.
+2023-04-13 12:45:22,240 - TM1Backup - INFO - Starting Backup.  Arguments received from CMD: {'--version': False,
+ '-h': False,
+ '-k': '3',
+ '-l': '15',
+ '<destination>': 'C:\\TM1_Servers\\GLCS\\Backups',
+ '<logdir>': 'C:\\TM1_Servers\\GLCS\\Logs',
+ '<servername>': 'chad',
+ '<source>': 'C:\\TM1_Servers\\GLCS\\Database'}
+2023-04-13 12:45:22,241 - TM1Backup - INFO - Server name: chad
+2023-04-13 12:45:22,241 - TM1Backup - INFO - Source path: C:\TM1_Servers\GLCS\Database
+2023-04-13 12:45:22,241 - TM1Backup - INFO - Logging path: C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:45:22,241 - TM1Backup - INFO - Backup file to be generated: C:\TM1_Servers\GLCS\Backups\chad_Backup_20230413124522.7z
+2023-04-13 12:45:22,242 - TM1Backup - INFO - Backup file retention 3
+2023-04-13 12:45:22,242 - TM1Backup - INFO - Log file retention 15
+2023-04-13 12:45:22,242 - TM1Backup - INFO - Backing up 'C:\TM1_Servers\GLCS\Database'
+2023-04-13 12:45:26,353 - TM1Backup - INFO - Beginning clean of folder 'C:\TM1_Servers\GLCS\Backups'
+2023-04-13 12:45:26,354 - TM1Backup - INFO - Removing C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123121727.7z
+2023-04-13 12:45:26,355 - TM1Backup - INFO - Removing C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123121913.7z
+2023-04-13 12:45:26,356 - TM1Backup - INFO - Removing C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123122008.7z
+2023-04-13 12:45:26,357 - TM1Backup - INFO - Removing C:\TM1_Servers\GLCS\Backups\chad_Backup_20221123122023.7z
+2023-04-13 12:45:26,358 - TM1Backup - INFO - Cleaning complete
+2023-04-13 12:45:26,358 - TM1Backup - INFO - Beginning clean of log dir 'C:\TM1_Servers\GLCS\Logs
+2023-04-13 12:45:26,360 - TM1Backup - INFO - Log cleaning complete
+2023-04-13 12:45:26,360 - TM1Backup - INFO - Backup complete in 4.12 seconds.
+2024-02-13 12:14:09,244 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:14:09,245 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:14:09,245 - TM1Backup - INFO - Logging path: test_logdir
+2024-02-13 12:14:09,246 - TM1Backup - INFO - 7-zip located at "test_sevenzip"
+2024-02-13 12:14:09,246 - TM1Backup - INFO - Backup file to be generated: "test_destination\test_server_Backup_20240213121409.7z"
+2024-02-13 12:14:09,247 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:14:09,247 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:14:09,248 - TM1Backup - INFO - Log file retention 5
+2024-02-13 12:14:09,249 - TM1Backup - INFO - Backing up '"test_source"'
+2024-02-13 12:14:09,252 - TM1Backup - INFO - Beginning clean of folder 'test_destination'
+2024-02-13 12:14:09,253 - TM1Backup - INFO - Cleaning complete
+2024-02-13 12:14:09,255 - TM1Backup - INFO - Beginning clean of log dir 'test_logdir
+2024-02-13 12:14:09,257 - TM1Backup - INFO - Log cleaning complete
+2024-02-13 12:14:09,258 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:14:09,258 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:14:09,259 - TM1Backup - INFO - Logging path: test_logdir
+2024-02-13 12:14:09,259 - TM1Backup - INFO - 7-zip located at "test_sevenzip"
+2024-02-13 12:14:09,260 - TM1Backup - INFO - Backup file to be generated: "test_destination\test_server_Backup_20240213121409.7z"
+2024-02-13 12:14:09,260 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:14:09,260 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:14:09,261 - TM1Backup - INFO - Log file retention 5
+2024-02-13 12:14:09,265 - TM1Backup - INFO - Beginning clean of folder 'test_path'
+2024-02-13 12:14:09,272 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:14:09,274 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:14:09,274 - TM1Backup - INFO - Logging path: test_logdir
+2024-02-13 12:14:09,275 - TM1Backup - INFO - 7-zip located at "test_sevenzip"
+2024-02-13 12:14:09,275 - TM1Backup - INFO - Backup file to be generated: "test_destination\test_server_Backup_20240213121409.7z"
+2024-02-13 12:14:09,276 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:14:09,276 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:14:09,276 - TM1Backup - INFO - Log file retention 5
+2024-02-13 12:14:09,281 - TM1Backup - INFO - Beginning clean of log dir 'test_logdir
+2024-02-13 12:18:16,064 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:18:16,065 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:18:16,077 - TM1Backup - INFO - Destination path: test_destination
+2024-02-13 12:18:16,078 - TM1Backup - INFO - 7-zip located at: "C:\Program Files\7-Zip\7z.exe"
+2024-02-13 12:18:16,080 - TM1Backup - INFO - Zip file to be generated: "test_destination\test_server_Backup_20240213121753.7z"
+2024-02-13 12:18:16,082 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:18:16,086 - TM1Backup - INFO - "C:\Program Files\7-Zip\7z.exe" a "test_destination\test_server_Backup_20240213121753.7z" -t7z -mmt -mx=1 -- "test_source"
+2024-02-13 12:18:16,091 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:18:16,094 - TM1Backup - INFO - Log file retention 5 days
+2024-02-13 12:18:16,100 - TM1Backup - INFO - Beginning backup of "test_source"
+2024-02-13 12:18:16,106 - TM1Backup - INFO - Beginning clean of 'test_destination'
+2024-02-13 12:18:16,111 - TM1Backup - INFO - Cleaning complete
+2024-02-13 12:18:16,116 - TM1Backup - INFO - Beginning clean of test_logdir
+2024-02-13 12:18:16,123 - TM1Backup - INFO - Log cleaning complete
+2024-02-13 12:18:33,437 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:18:33,438 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:18:33,441 - TM1Backup - INFO - Destination path: test_destination
+2024-02-13 12:18:33,441 - TM1Backup - INFO - 7-zip located at: "C:\Program Files\7-Zip\7z.exe"
+2024-02-13 12:18:33,442 - TM1Backup - INFO - Zip file to be generated: "test_destination\test_server_Backup_20240213121816.7z"
+2024-02-13 12:18:33,443 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:18:33,444 - TM1Backup - INFO - "C:\Program Files\7-Zip\7z.exe" a "test_destination\test_server_Backup_20240213121816.7z" -t7z -mmt -mx=1 -- "test_source"
+2024-02-13 12:18:33,444 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:18:33,445 - TM1Backup - INFO - Log file retention 5 days
+2024-02-13 12:18:33,448 - TM1Backup - INFO - Beginning clean of 'test_path'
+2024-02-13 12:18:51,987 - TM1Backup - INFO - Server name: test_server
+2024-02-13 12:18:51,988 - TM1Backup - INFO - Source path: "test_source"
+2024-02-13 12:18:51,990 - TM1Backup - INFO - Destination path: test_destination
+2024-02-13 12:18:51,993 - TM1Backup - INFO - 7-zip located at: "C:\Program Files\7-Zip\7z.exe"
+2024-02-13 12:18:51,997 - TM1Backup - INFO - Zip file to be generated: "test_destination\test_server_Backup_20240213121833.7z"
+2024-02-13 12:18:52,000 - TM1Backup - INFO - Feeder files will be backed up
+2024-02-13 12:18:52,003 - TM1Backup - INFO - "C:\Program Files\7-Zip\7z.exe" a "test_destination\test_server_Backup_20240213121833.7z" -t7z -mmt -mx=1 -- "test_source"
+2024-02-13 12:18:52,003 - TM1Backup - INFO - Backup file retention 5
+2024-02-13 12:18:52,004 - TM1Backup - INFO - Log file retention 5 days
+2024-02-13 12:18:52,011 - TM1Backup - INFO - Beginning clean of test_logdir

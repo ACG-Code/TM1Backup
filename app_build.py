@@ -1,0 +1,447 @@
+"""
+Build Script for TM1Backup
+
+Usage:
+    build.py [--major | --minor | --patch]
+    build.py (-h | --help)
+
+Options:
+    --major     Bump major version (resets minor and patch)
+    --minor     Bump minor version (resets patch)
+    --patch     Bump patch version
+    -h --help   Show this help message
+
+Description:
+    This script manages versioning and builds the executable for TM1Backup.
+    It creates version files, updates build numbers, and uses PyInstaller
+    to create a standalone executable.
+"""
+
+import os
+import subprocess
+import sys
+from datetime import datetime
+from typing import Tuple
+
+from docopt import docopt
+
+# Application configuration
+APP_NAME = 'TM1Backup'
+SCRIPT_NAME = 'app.py'
+BUILD_FILE = 'app_build_number.txt'
+VERSION_FILE = 'app_version.txt'
+YEAR_FILE = 'app_year.txt'
+SPEC_FILE = 'TM1Backup.spec'
+
+# Default version (used if version file doesn't exist)
+DEFAULT_VERSION = (7, 0, 0)
+
+# Directory paths
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+ASSETS_DIR = os.path.join(ROOT_DIR, 'assets')
+ICON_PATH = os.path.join(ASSETS_DIR, 'ACG.ico').replace('\\', '/')
+DIST_PATH = os.path.join(ROOT_DIR, 'dist').replace('\\', '/')
+WORK_PATH = os.path.join(ROOT_DIR, 'build').replace('\\', '/')
+FILES_DIR = os.path.join(ROOT_DIR, 'files')
+
+
+class BuildError(Exception):
+    """Custom exception for build errors"""
+    pass
+
+
+def read_year() -> str:
+    """
+    Read copyright year from file or return current year.
+
+    Returns:
+        Year string
+    """
+    year_path = os.path.join(ROOT_DIR, YEAR_FILE)
+
+    if os.path.exists(year_path):
+        try:
+            with open(year_path, 'r', encoding='utf-8') as f:
+                year = f.read().strip()
+                if year:
+                    return year
+        except Exception as e:
+            print(f"Warning: Could not read year file: {e}")
+
+    return str(datetime.now().year)
+
+
+def read_version() -> Tuple[int, int, int]:
+    """
+    Read current version from version file.
+
+    Returns:
+        Tuple of (major, minor, patch)
+    """
+    version_path = os.path.join(ROOT_DIR, VERSION_FILE)
+
+    if not os.path.exists(version_path):
+        return DEFAULT_VERSION
+
+    try:
+        with open(version_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # Look for FileVersion pattern
+            for line in content.split('\n'):
+                if 'FileVersion' in line and 'StringStruct' in line:
+                    # Extract version like '7.0.0.123'
+                    version_str = line.split("'")[3]
+                    parts = version_str.split('.')
+                    if len(parts) >= 3:
+                        return (int(parts[0]), int(parts[1]), int(parts[2]))
+    except Exception as e:
+        print(f"Warning: Could not parse version file: {e}")
+
+    return DEFAULT_VERSION
+
+
+def read_build() -> int:
+    """
+    Read current build number and increment it.
+
+    Returns:
+        Next build number
+    """
+    build_path = os.path.join(ROOT_DIR, BUILD_FILE)
+
+    if os.path.exists(build_path):
+        try:
+            with open(build_path, 'r', encoding='utf-8') as f:
+                return int(f.read().strip()) + 1
+        except (ValueError, IOError) as e:
+            print(f"Warning: Could not read build file: {e}")
+
+    return 1
+
+
+def write_build(build: int):
+    """
+    Write build number to file.
+
+    Args:
+        build: Build number to write
+    """
+    build_path = os.path.join(ROOT_DIR, BUILD_FILE)
+
+    try:
+        with open(build_path, 'w', encoding='utf-8') as f:
+            f.write(str(build))
+    except IOError as e:
+        raise BuildError(f"Failed to write build file: {e}")
+
+
+def bump_version(args: dict, current_version: Tuple[int, int, int]) -> Tuple[int, int, int]:
+    """
+    Bump version based on arguments.
+
+    Args:
+        args: Command line arguments
+        current_version: Current (major, minor, patch) version
+
+    Returns:
+        New (major, minor, patch) version
+    """
+    major, minor, patch = current_version
+
+    if args['--major']:
+        major += 1
+        minor = 0
+        patch = 0
+        print(f"Bumping major version: {major}.{minor}.{patch}")
+    elif args['--minor']:
+        minor += 1
+        patch = 0
+        print(f"Bumping minor version: {major}.{minor}.{patch}")
+    elif args['--patch']:
+        patch += 1
+        print(f"Bumping patch version: {major}.{minor}.{patch}")
+    else:
+        print(f"Using current version: {major}.{minor}.{patch}")
+
+    return major, minor, patch
+
+
+def write_version_file(major: int, minor: int, patch: int, build: int, year: str):
+    """
+    Write PyInstaller version file.
+
+    Args:
+        major: Major version number
+        minor: Minor version number
+        patch: Patch version number
+        build: Build number
+        year: Copyright year
+    """
+    content = f"""# UTF-8
+#
+# This file is auto-generated by build.py
+# Do not edit manually
+#
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=({major}, {minor}, {patch}, {build}),
+    prodvers=({major}, {minor}, {patch}, {build}),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable(
+        '040904B0',
+        [
+          StringStruct('CompanyName', 'Application Consulting Group, Inc.'),
+          StringStruct('FileDescription', '{APP_NAME}'),
+          StringStruct('FileVersion', '{major}.{minor}.{patch}.{build}'),
+          StringStruct('InternalName', '{APP_NAME}'),
+          StringStruct('LegalCopyright', '© {year} Application Consulting Group, Inc.'),
+          StringStruct('OriginalFilename', '{APP_NAME}.exe'),
+          StringStruct('ProductName', '{APP_NAME}'),
+          StringStruct('ProductVersion', '{major}.{minor}.{patch}.{build}')
+        ]
+      )
+    ]),
+    VarFileInfo([VarStruct('Translation', [1033, 1200])])
+  ]
+)
+"""
+
+    version_path = os.path.join(ROOT_DIR, VERSION_FILE)
+
+    try:
+        with open(version_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"Created version file: {version_path}")
+    except IOError as e:
+        raise BuildError(f"Failed to write version file: {e}")
+
+
+def write_year_file(year: str):
+    """
+    Write year file for runtime access.
+
+    Args:
+        year: Copyright year
+    """
+    year_path = os.path.join(ROOT_DIR, YEAR_FILE)
+
+    try:
+        with open(year_path, 'w', encoding='utf-8') as f:
+            f.write(year)
+        print(f"Created year file: {year_path}")
+    except IOError as e:
+        raise BuildError(f"Failed to write year file: {e}")
+
+
+def validate_build_requirements():
+    """
+    Validate that all required files and directories exist.
+
+    Raises:
+        BuildError: If any required file is missing
+    """
+    # Check for icon file
+    if not os.path.exists(ICON_PATH):
+        raise BuildError(f"Icon file not found: {ICON_PATH}")
+
+    # Check for script file
+    script_path = os.path.join(ROOT_DIR, SCRIPT_NAME)
+    if not os.path.exists(script_path):
+        raise BuildError(f"Script file not found: {script_path}")
+
+    # Check for 7-Zip files
+    sevenzip_exe = os.path.join(FILES_DIR, '7z.exe')
+    sevenzip_dll = os.path.join(FILES_DIR, '7z.dll')
+
+    if not os.path.exists(sevenzip_exe):
+        raise BuildError(f"7-Zip executable not found: {sevenzip_exe}")
+
+    if not os.path.exists(sevenzip_dll):
+        raise BuildError(f"7-Zip DLL not found: {sevenzip_dll}")
+
+    # Create output directories if they don't exist
+    os.makedirs(DIST_PATH, exist_ok=True)
+    os.makedirs(WORK_PATH, exist_ok=True)
+
+    print("✓ All build requirements validated")
+
+
+def write_spec_file():
+    """
+    Write PyInstaller spec file.
+    """
+    version_path = os.path.join(ROOT_DIR, VERSION_FILE)
+    year_path = os.path.join(ROOT_DIR, YEAR_FILE)
+    sevenzip_exe = os.path.join(FILES_DIR, '7z.exe')
+    sevenzip_dll = os.path.join(FILES_DIR, '7z.dll')
+
+    # Convert paths to forward slashes for spec file
+    version_path_spec = version_path.replace('\\', '/')
+    year_path_spec = year_path.replace('\\', '/')
+    sevenzip_exe_spec = sevenzip_exe.replace('\\', '/')
+    sevenzip_dll_spec = sevenzip_dll.replace('\\', '/')
+
+    spec_content = f"""# -*- mode: python ; coding: utf-8 -*-
+# Auto-generated by build.py
+
+block_cipher = None
+
+a = Analysis(
+    ['{SCRIPT_NAME}'],
+    pathex=[],
+    binaries=[
+        ('{sevenzip_exe_spec}', '.'),
+        ('{sevenzip_dll_spec}', '.')
+    ],
+    datas=[
+        ('{version_path_spec}', '.'),
+        ('{year_path_spec}', '.')
+    ],
+    hiddenimports=[],
+    hookspath=[],
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False
+)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    [],
+    name='{APP_NAME}',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=True,
+    disable_windowed_traceback=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon='{ICON_PATH}',
+    version='{version_path_spec}'
+)
+"""
+
+    spec_path = os.path.join(ROOT_DIR, SPEC_FILE)
+
+    try:
+        with open(spec_path, 'w', encoding='utf-8') as f:
+            f.write(spec_content)
+        print(f"Created spec file: {spec_path}")
+    except IOError as e:
+        raise BuildError(f"Failed to write spec file: {e}")
+
+
+def build_executable():
+    """
+    Build the executable using PyInstaller.
+    """
+    spec_path = os.path.join(ROOT_DIR, SPEC_FILE)
+
+    if not os.path.exists(spec_path):
+        raise BuildError(f"Spec file not found: {spec_path}")
+
+    print("\n" + "="*60)
+    print("Building executable with PyInstaller...")
+    print("="*60 + "\n")
+
+    try:
+        result = subprocess.run(
+            [
+                'pyinstaller',
+                spec_path,
+                '--distpath', DIST_PATH,
+                '--workpath', WORK_PATH,
+                '--clean',
+                '--noconfirm'
+            ],
+            check=True,
+            capture_output=False,
+            text=True
+        )
+
+        print("\n" + "="*60)
+        print("✓ Build completed successfully!")
+        print("="*60)
+
+        # Show output location
+        exe_path = os.path.join(DIST_PATH, f"{APP_NAME}.exe")
+        if os.path.exists(exe_path):
+            size_mb = os.path.getsize(exe_path) / (1024 * 1024)
+            print(f"\nExecutable: {exe_path}")
+            print(f"Size: {size_mb:.2f} MB")
+
+    except subprocess.CalledProcessError as e:
+        raise BuildError(f"PyInstaller failed: {e}")
+    except FileNotFoundError:
+        raise BuildError("PyInstaller not found. Install it with: pip install pyinstaller")
+
+
+def main():
+    """Main build function."""
+    try:
+        # Parse arguments
+        args = docopt(__doc__)
+
+        print(f"\n{'='*60}")
+        print(f"{APP_NAME} Build Script")
+        print(f"{'='*60}\n")
+
+        # Validate requirements
+        validate_build_requirements()
+
+        # Read current state
+        year = read_year()
+        current_version = read_version()
+        build = read_build()
+
+        # Bump version if requested
+        major, minor, patch = bump_version(args, current_version)
+
+        # Write files
+        write_build(build)
+        write_version_file(major, minor, patch, build, year)
+        write_year_file(year)
+        write_spec_file()
+
+        # Display version info
+        print(f"\nVersion: {major}.{minor}.{patch}.{build}")
+        print(f"Copyright: © {year} Application Consulting Group, Inc.\n")
+
+        # Build executable
+        build_executable()
+
+        return 0
+
+    except BuildError as e:
+        print(f"\n✗ Build Error: {e}", file=sys.stderr)
+        return 1
+    except KeyboardInterrupt:
+        print("\n\n✗ Build cancelled by user", file=sys.stderr)
+        return 130
+    except Exception as e:
+        print(f"\n✗ Unexpected error: {e}", file=sys.stderr)
+        return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())
