@@ -459,11 +459,12 @@ if __name__ == "__main__":
     try:
         start_time = time.perf_counter()
 
-        # Setup paths and logging
+        # Setup paths and logging first so all errors are captured
         app_path, base_path, log_file = resolve_paths()
+        setup_logging(log_file)
+
         version = get_file_version(app_path)
         year = get_year(app_path)
-        setup_logging(log_file)
 
         # Log startup info
         logging.info(f"{APP_NAME} Version: {version} | © {year} Application Consulting Group, Inc.")
@@ -471,7 +472,14 @@ if __name__ == "__main__":
         # Create copyright string for docopt
         copyright_text = f"{APP_NAME}\nVersion: {version}\n© {year} Application Consulting Group, Inc."
 
-        cmd_args = docopt(__doc__, version=copyright_text)
+        try:
+            cmd_args = docopt(__doc__, version=copyright_text)
+        except SystemExit as e:
+            # docopt raises SystemExit for -h/--version (code 0) or bad args (code 1)
+            if e.code != 0:
+                logging.error(f"Invalid arguments - check command syntax. Exit code: {e.code}")
+                logging.error(f"Arguments received: {sys.argv[1:]}")
+            sys.exit(e.code)
 
         success = main(cmd_args, base_path)
 
