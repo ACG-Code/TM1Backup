@@ -229,6 +229,7 @@ class TestBackupService:
         assert service.keep == 1
         assert service.logs == -1
         assert service.zip_format == '7z'
+        assert service.compression_level == 5
         assert service.zipfile.endswith('.7z')
         assert 'TestServer_Backup_' in service.zipfile
 
@@ -243,14 +244,28 @@ class TestBackupService:
             feeders=True,
             keep=5,
             logs=7,
-            zip_format='zip'
+            zip_format='zip',
+            compression_level=9
         )
 
         assert service.feeders is True
         assert service.keep == 5
         assert service.logs == 7
         assert service.zip_format == 'zip'
+        assert service.compression_level == 9
         assert service.zipfile.endswith('.zip')
+
+    def test_init_invalid_compression_level(self, mock_paths):
+        """Test BackupService rejects out-of-range compression levels."""
+        with pytest.raises(app.BackupError):
+            app.BackupService(
+                server='TestServer',
+                source=mock_paths['source'],
+                destination=mock_paths['destination'],
+                logdir=mock_paths['logdir'],
+                sevenzip=mock_paths['sevenzip'],
+                compression_level=10
+            )
 
     def test_build_command_without_feeders(self, mock_paths):
         """Test command building without feeder files."""
@@ -266,6 +281,7 @@ class TestBackupService:
         assert mock_paths['sevenzip'] in service.cmd
         assert 'a' in service.cmd  # Add command
         assert '-t7z' in service.cmd
+        assert '-mx=5' in service.cmd
         assert '-xr!*.FEEDERS' in service.cmd
         assert mock_paths['source'] in service.cmd
 
@@ -294,6 +310,19 @@ class TestBackupService:
         )
 
         assert '-tzip' in service.cmd
+
+    def test_build_command_compression_level(self, mock_paths):
+        """Test command building with a custom compression level."""
+        service = app.BackupService(
+            server='TestServer',
+            source=mock_paths['source'],
+            destination=mock_paths['destination'],
+            logdir=mock_paths['logdir'],
+            sevenzip=mock_paths['sevenzip'],
+            compression_level=0
+        )
+
+        assert '-mx=0' in service.cmd
 
     @patch('subprocess.run')
     @patch('os.path.exists')
@@ -477,7 +506,8 @@ class TestMainFunction:
             '-f': False,
             '-k': '3',
             '-l': '7',
-            '-z': False
+            '-z': False,
+            '-c': '5'
         }
 
     @patch('app.BackupService')
@@ -549,6 +579,22 @@ class TestMainFunction:
         # Check that BackupService was initialized with zip_format='zip'
         call_kwargs = mock_service_class.call_args[1]
         assert call_kwargs['zip_format'] == 'zip'
+
+    @patch('app.BackupService')
+    @patch('app.validate_paths')
+    def test_main_with_compression_level(self, mock_validate, mock_service_class, mock_args, tmp_path):
+        """Test main with a custom compression level."""
+        mock_args['-c'] = '9'
+        mock_service = Mock()
+        mock_service.backup.return_value = True
+        mock_service_class.return_value = mock_service
+
+        base_path = str(tmp_path)
+        result = app.main(mock_args, base_path)
+
+        # Check that BackupService was initialized with compression_level=9
+        call_kwargs = mock_service_class.call_args[1]
+        assert call_kwargs['compression_level'] == 9
 
     def test_main_invalid_keep_value(self, mock_args, tmp_path):
         """Test main with invalid keep value."""

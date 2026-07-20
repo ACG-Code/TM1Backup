@@ -271,7 +271,7 @@ def validate_build_requirements():
     os.makedirs(DIST_PATH, exist_ok=True)
     os.makedirs(WORK_PATH, exist_ok=True)
 
-    print("✓ All build requirements validated")
+    print("All build requirements validated")
 
 
 def write_spec_file():
@@ -380,7 +380,7 @@ def build_executable():
         )
 
         print("\n" + "="*60)
-        print("✓ Build completed successfully!")
+        print("Build completed successfully!")
         print("="*60)
 
         # Show output location
@@ -433,10 +433,10 @@ def main():
         return 0
 
     except BuildError as e:
-        print(f"\n✗ Build Error: {e}", file=sys.stderr)
+        print(f"\nBuild Error: {e}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:
-        print("\n\n✗ Build cancelled by user", file=sys.stderr)
+        print("\n\nBuild cancelled by user", file=sys.stderr)
         return 130
     except Exception as e:
         print(f"\n✗ Unexpected error: {e}", file=sys.stderr)

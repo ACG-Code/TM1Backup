@@ -16,6 +16,7 @@ Options:
     -k <kn>         Keep <kn> number of backup files [default: 1]
     -l <ln>         Keep <ln> days of Log files [default: -1]
     -z              Use ZIP Format (default is 7z)
+    -c <cn>         Compression level 0-9 (0=store, 9=ultra) [default: 5]
     -h              Show this screen
     --version       Show Version information
 
@@ -157,7 +158,8 @@ class BackupService:
         feeders: bool = False,
         keep: int = 1,
         logs: int = -1,
-        zip_format: str = '7z'
+        zip_format: str = '7z',
+        compression_level: int = 5
     ):
         """
         Initialize the backup service.
@@ -172,7 +174,11 @@ class BackupService:
             keep: Number of backup files to retain
             logs: Days of logs to retain (-1 means don't clean)
             zip_format: Compression format ('7z' or 'zip')
+            compression_level: 7-Zip compression level 0-9 (0=store, 9=ultra)
         """
+        if not 0 <= compression_level <= 9:
+            raise BackupError(f"Compression level must be 0-9: {compression_level}")
+
         self.server = server
         self.source = source
         self.destination = destination
@@ -182,6 +188,7 @@ class BackupService:
         self.keep = keep
         self.logs = logs
         self.zip_format = zip_format
+        self.compression_level = compression_level
 
         # Generate timestamp
         self.timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
@@ -206,11 +213,13 @@ class BackupService:
             self.zipfile,
             f'-t{self.zip_format}',  # Archive type
             '-mmt',  # Multi-threading
-            '-mx=5',  # Compression level (5 = normal)
+            f'-mx={self.compression_level}',  # Compression level (0=store, 9=ultra)
         ]
 
         if not self.feeders:
             base_cmd.append('-xr!*.FEEDERS')  # Exclude feeder files
+
+        base_cmd.append('-xr!tm1rawstore.*')  # Exclude TM1 raw store (always locked while TM1 is running)
 
         base_cmd.extend(['--', self.source])
 
@@ -224,6 +233,7 @@ class BackupService:
         logging.info(f"Logging path: {self.logdir}")
         logging.info(f"7-Zip located at: {self.sevenzip}")
         logging.info(f"Backup format: {self.zip_format}")
+        logging.info(f"Compression level: {self.compression_level}")
 
         if self.feeders:
             logging.info("Feeder files will be included in backup")
@@ -414,6 +424,7 @@ def main(args: dict, base_path: str) -> bool:
         keep = int(args['-k']) if args['-k'] else 1
         logs = int(args['-l']) if args['-l'] else -1
         zip_format = 'zip' if args['-z'] else '7z'
+        compression_level = int(args['-c']) if args['-c'] else 5
 
         # Locate 7-Zip
         sevenzip = os.path.join(base_path, '7z.exe')
@@ -431,7 +442,8 @@ def main(args: dict, base_path: str) -> bool:
             feeders=feeders,
             keep=keep,
             logs=logs,
-            zip_format=zip_format
+            zip_format=zip_format,
+            compression_level=compression_level
         )
 
         # Perform backup

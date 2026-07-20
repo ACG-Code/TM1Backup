@@ -80,6 +80,7 @@ tm1backup <servername> <source> <destination> <logdir> [options]
 | `-k <kn>` | Keep most recent `kn` backup files | 1 |
 | `-l <ln>` | Keep `ln` days of TM1 log files | -1 (disabled) |
 | `-z` | Use ZIP format instead of 7z | 7z format |
+| `-c <cn>` | Compression level 0-9 (0=store, 9=ultra) | 5 |
 | `-h` | Show help screen | - |
 | `--version` | Show version information | - |
 
@@ -120,7 +121,14 @@ Create backup in ZIP format instead of 7z:
 tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -z
 ```
 
-### Example 6: Complete Configuration
+### Example 6: Set Compression Level
+Use maximum compression (slower, smaller archive):
+
+```bash
+tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -c 9
+```
+
+### Example 7: Complete Configuration
 Keep 3 backups, include feeders, clean 14 days of logs:
 
 ```bash
@@ -347,6 +355,9 @@ tm1backup <server> <source> <dest> <logdir> -l 14
 
 # Use ZIP format
 tm1backup <server> <source> <dest> <logdir> -z
+
+# Set compression level (0=store, 9=ultra)
+tm1backup <server> <source> <dest> <logdir> -c 9
 
 # Full example
 tm1backup SData "C:\TM1\SData" "D:\Backup" "C:\TM1\SData" -f -k 7 -l 14
