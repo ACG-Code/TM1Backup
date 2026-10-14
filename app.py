@@ -17,6 +17,7 @@ Options:
     -l <ln>         Keep <ln> days of Log files [default: -1]
     -z              Use ZIP Format (default is 7z)
     -c <cn>         Compression level 0-9 (0=store, 9=ultra) [default: 5]
+    -a <an>         Keep <an> days of auditstore logs [default: -1]
     -h              Show this screen
     --version       Show Version information
 
@@ -158,6 +159,7 @@ class BackupService:
         feeders: bool = False,
         keep: int = 1,
         logs: int = -1,
+        auditstore: int = -1,
         zip_format: str = '7z',
         compression_level: int = 5
     ):
@@ -173,6 +175,7 @@ class BackupService:
             feeders: Whether to include feeder files
             keep: Number of backup files to retain
             logs: Days of logs to retain (-1 means don't clean)
+            auditstore: Days of auditstore logs to retain (-1 means don't clean)
             zip_format: Compression format ('7z' or 'zip')
             compression_level: 7-Zip compression level 0-9 (0=store, 9=ultra)
         """
@@ -187,6 +190,7 @@ class BackupService:
         self.feeders = feeders
         self.keep = keep
         self.logs = logs
+        self.auditstore = auditstore
         self.zip_format = zip_format
         self.compression_level = compression_level
 
@@ -246,6 +250,9 @@ class BackupService:
         if self.logs > 0:
             logging.info(f"Log file retention: {self.logs} days")
 
+        if self.auditstore > 0:
+            logging.info(f"Auditstore log retention: {self.auditstore} days")
+
     def backup(self) -> bool:
         """
         Perform the backup operation.
@@ -288,6 +295,10 @@ class BackupService:
             # Clean old logs if configured
             if self.logs > 0:
                 self.clean_logs()
+
+            # Clean old auditstore logs if configured
+            if self.auditstore > 0:
+                self.clean_auditstore()
 
             return True
 
@@ -364,6 +375,31 @@ class BackupService:
         except Exception as e:
             logging.error(f"Error during log cleanup: {e}", exc_info=True)
 
+    def clean_auditstore(self):
+        """
+        Clean old TM1 auditstore log files based on retention period.
+        """
+        try:
+            logging.info(f"Cleaning TM1 auditstore files in: {self.logdir}")
+
+            cutoff_time = time.time() - (self.auditstore * 86400)  # Convert days to seconds
+            removed_count = 0
+
+            # Clean TM1AUDITSTORE* files (pattern: TM1AUDITSTORE + 14 digits)
+            for file in Path(self.logdir).glob('TM1AUDITSTORE??????????????.*'):
+                try:
+                    if file.stat().st_mtime < cutoff_time:
+                        logging.info(f"Removing auditstore file: {file.name}")
+                        os.remove(file)
+                        removed_count += 1
+                except OSError as e:
+                    logging.error(f"Failed to remove {file.name}: {e}")
+
+            logging.info(f"Auditstore cleanup complete - removed {removed_count} file(s)")
+
+        except Exception as e:
+            logging.error(f"Error during auditstore cleanup: {e}", exc_info=True)
+
 
 def validate_paths(source: str, destination: str, logdir: str, sevenzip: str):
     """
@@ -423,6 +459,7 @@ def main(args: dict, base_path: str) -> bool:
         feeders = args['-f']
         keep = int(args['-k']) if args['-k'] else 1
         logs = int(args['-l']) if args['-l'] else -1
+        auditstore = int(args['-a']) if args['-a'] else -1
         zip_format = 'zip' if args['-z'] else '7z'
         compression_level = int(args['-c']) if args['-c'] else 5
 
@@ -442,6 +479,7 @@ def main(args: dict, base_path: str) -> bool:
             feeders=feeders,
             keep=keep,
             logs=logs,
+            auditstore=auditstore,
             zip_format=zip_format,
             compression_level=compression_level
         )
