@@ -432,23 +432,22 @@ class TestBackupService:
         assert len(remaining_files) == 2
 
     def test_clean_logs_removes_old_files(self, mock_paths):
-        """Test cleanup of old TM1 log files."""
+        """Test -l cleans old TM1S files only, and leaves ProcessError files alone."""
         logdir = Path(mock_paths['logdir'])
 
-        # Create old log files
         old_time = time.time() - (86400 * 10)  # 10 days old
-
-        old_error_log = logdir / "TM1ProcessError_20250101.log"
-        old_error_log.write_text("error")
-        os.utime(old_error_log, (old_time, old_time))
 
         old_server_log = logdir / "TM1S20250101120000.log"
         old_server_log.write_text("log")
         os.utime(old_server_log, (old_time, old_time))
 
-        # Create recent log files
-        recent_log = logdir / "TM1ProcessError_20250123.log"
-        recent_log.write_text("recent")
+        recent_server_log = logdir / "TM1S20250123120000.log"
+        recent_server_log.write_text("recent")
+
+        # Old ProcessError file must NOT be touched by the -l retention
+        old_error_log = logdir / "TM1ProcessError_20250101.log"
+        old_error_log.write_text("error")
+        os.utime(old_error_log, (old_time, old_time))
 
         service = app.BackupService(
             server='TestServer',
@@ -461,10 +460,103 @@ class TestBackupService:
 
         service.clean_logs()
 
-        # Old files should be removed, recent file should remain
-        assert not old_error_log.exists()
         assert not old_server_log.exists()
-        assert recent_log.exists()
+        assert recent_server_log.exists()
+        assert old_error_log.exists()
+
+    def test_clean_process_errors_removes_old_files(self, mock_paths):
+        """Test -e cleans old TM1ProcessError files only, and leaves TM1S files alone."""
+        logdir = Path(mock_paths['logdir'])
+
+        old_time = time.time() - (86400 * 10)  # 10 days old
+
+        old_error_log = logdir / "TM1ProcessError_20250101.log"
+        old_error_log.write_text("error")
+        os.utime(old_error_log, (old_time, old_time))
+
+        recent_error_log = logdir / "TM1ProcessError_20250123.log"
+        recent_error_log.write_text("recent")
+
+        # Old TM1S file must NOT be touched by the -e retention
+        old_server_log = logdir / "TM1S20250101120000.log"
+        old_server_log.write_text("log")
+        os.utime(old_server_log, (old_time, old_time))
+
+        service = app.BackupService(
+            server='TestServer',
+            source=mock_paths['source'],
+            destination=mock_paths['destination'],
+            logdir=mock_paths['logdir'],
+            sevenzip=mock_paths['sevenzip'],
+            error_logs=7
+        )
+
+        service.clean_process_errors()
+
+        assert not old_error_log.exists()
+        assert recent_error_log.exists()
+        assert old_server_log.exists()
+
+    def test_log_and_error_retention_are_independent(self, mock_paths):
+        """Test TM1S and ProcessError files honour their own retention periods."""
+        logdir = Path(mock_paths['logdir'])
+
+        age_10_days = time.time() - (86400 * 10)
+
+        server_log = logdir / "TM1S20250101120000.log"
+        server_log.write_text("log")
+        os.utime(server_log, (age_10_days, age_10_days))
+
+        error_log = logdir / "TM1ProcessError_20250101.log"
+        error_log.write_text("error")
+        os.utime(error_log, (age_10_days, age_10_days))
+
+        # TM1S kept 30 days (file survives), ProcessError kept 7 days (file removed)
+        service = app.BackupService(
+            server='TestServer',
+            source=mock_paths['source'],
+            destination=mock_paths['destination'],
+            logdir=mock_paths['logdir'],
+            sevenzip=mock_paths['sevenzip'],
+            logs=30,
+            error_logs=7
+        )
+
+        service.clean_logs()
+        service.clean_process_errors()
+
+        assert server_log.exists()
+        assert not error_log.exists()
+
+    @patch('subprocess.run')
+    def test_backup_does_not_clean_logs_when_flags_not_set(self, mock_run, mock_paths):
+        """Test no log cleaning happens for any area when -l, -e and -a are omitted."""
+        logdir = Path(mock_paths['logdir'])
+
+        old_time = time.time() - (86400 * 365)  # a year old
+        old_files = [
+            logdir / "TM1S20240101120000.log",
+            logdir / "TM1ProcessError_20240101.log",
+            logdir / "TM1AUDITSTORE20240101120000.log",
+        ]
+        for f in old_files:
+            f.write_text("old")
+            os.utime(f, (old_time, old_time))
+
+        mock_run.return_value = Mock(returncode=0, stderr='')
+
+        service = app.BackupService(
+            server='TestServer',
+            source=mock_paths['source'],
+            destination=mock_paths['destination'],
+            logdir=mock_paths['logdir'],
+            sevenzip=mock_paths['sevenzip']
+        )
+        # Simulate 7-Zip having produced the archive
+        Path(service.zipfile).write_text("dummy")
+
+        assert service.backup() is True
+        assert all(f.exists() for f in old_files)
 
     def test_clean_logs_keeps_recent_files(self, mock_paths):
         """Test cleanup keeps files within retention period."""
@@ -473,7 +565,7 @@ class TestBackupService:
         # Create recent log files (2 days old)
         recent_time = time.time() - (86400 * 2)
 
-        recent_log = logdir / "TM1ProcessError_20250122.log"
+        recent_log = logdir / "TM1S20250122120000.log"
         recent_log.write_text("recent")
         os.utime(recent_log, (recent_time, recent_time))
 
@@ -506,6 +598,8 @@ class TestMainFunction:
             '-f': False,
             '-k': '3',
             '-l': '7',
+            '-e': '3',
+            '-a': None,
             '-z': False,
             '-c': '5'
         }

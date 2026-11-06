@@ -78,7 +78,9 @@ tm1backup <servername> <source> <destination> <logdir> [options]
 |--------|-------------|---------|
 | `-f` | Include feeder files in backup | Excluded |
 | `-k <kn>` | Keep most recent `kn` backup files | 1 |
-| `-l <ln>` | Keep `ln` days of TM1 log files | -1 (disabled) |
+| `-l <ln>` | Keep `ln` days of TM1S server log files | -1 (disabled) |
+| `-e <en>` | Keep `en` days of TM1ProcessError log files | -1 (disabled) |
+| `-a <an>` | Keep `an` days of TM1 auditstore files | -1 (disabled) |
 | `-z` | Use ZIP format instead of 7z | 7z format |
 | `-c <cn>` | Compression level 0-9 (0=store, 9=ultra) | 5 |
 | `-h` | Show help screen | - |
@@ -108,11 +110,13 @@ tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -f
 ```
 
 ### Example 4: Clean Old Logs
-Keep 7 days of TM1 log files, removing older ones:
+Keep 7 days of TM1S server logs and 30 days of TM1ProcessError logs, removing older ones:
 
 ```bash
-tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -l 7
+tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -l 7 -e 30
 ```
+
+Each of `-l`, `-e` and `-a` is independent. Omit an option and nothing is cleaned for that file type.
 
 ### Example 5: Use ZIP Format
 Create backup in ZIP format instead of 7z:
@@ -129,10 +133,10 @@ tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -c 9
 ```
 
 ### Example 7: Complete Configuration
-Keep 3 backups, include feeders, clean 14 days of logs:
+Keep 3 backups, include feeders, keep 14 days of TM1S logs and 30 days of TM1ProcessError logs:
 
 ```bash
-tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -f -k 3 -l 14
+tm1backup SData "C:\TM1Data\SData" "D:\Backups\TM1" "C:\TM1Data\SData" -f -k 3 -l 14 -e 30
 ```
 
 ## Backup File Naming
@@ -216,16 +220,21 @@ Logs are automatically rotated daily with 7 days of retention.
 
 ## Log File Cleanup
 
-When the `-l` option is used with a value greater than 0, the tool will clean up old TM1 log files:
+Each log type has its own retention option, so they can be kept for different lengths of time:
 
-**Files cleaned:**
-- `TM1ProcessError*.*` - All TM1 process error logs
-- `TM1S??????????????.*` - TM1 server logs (14-digit timestamp pattern)
+| Option | Files cleaned |
+|--------|---------------|
+| `-l <ln>` | `TM1S??????????????.*` - TM1 server logs (14-digit timestamp pattern) |
+| `-e <en>` | `TM1ProcessError*.*` - TM1 process error logs |
+| `-a <an>` | `TM1AUDITSTORE??????????????.*` - TM1 auditstore files (14-digit timestamp pattern) |
 
 **Retention logic:**
+- An option only takes effect when given a value greater than 0; if it is omitted, no files of that type are cleaned
 - Files older than the specified number of days are removed
 - More recent files are preserved
 - Cleanup is performed after each successful backup
+
+**Upgrading:** `-l` no longer removes `TM1ProcessError*` files. Add `-e <days>` to existing scheduled jobs to keep cleaning them.
 
 ## Troubleshooting
 
@@ -262,7 +271,7 @@ When the `-l` option is used with a value greater than 0, the tool will clean up
 5. **Store backups on a different drive** than the TM1 database for disaster recovery
 6. **Schedule backups during low-usage periods** to minimize performance impact
 7. **Test your restore procedure** periodically
-8. **Clean up old logs** regularly using the `-l` option to save disk space
+8. **Clean up old logs** regularly using the `-l`, `-e` and `-a` options to save disk space
 
 ## File Size Considerations
 
@@ -350,8 +359,8 @@ tm1backup <server> <source> <dest> <logdir> -k 7
 # Include feeders
 tm1backup <server> <source> <dest> <logdir> -f
 
-# Clean 14 days of logs
-tm1backup <server> <source> <dest> <logdir> -l 14
+# Keep 14 days of TM1S logs, 30 days of TM1ProcessError logs
+tm1backup <server> <source> <dest> <logdir> -l 14 -e 30
 
 # Use ZIP format
 tm1backup <server> <source> <dest> <logdir> -z

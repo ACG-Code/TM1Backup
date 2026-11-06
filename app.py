@@ -14,8 +14,9 @@ Positional Arguments:
 Options:
     -f              Backup Feeder files
     -k <kn>         Keep <kn> number of backup files [default: 1]
-    -l <ln>         Keep <ln> days of Log files [default: -1]
-    -z              Use ZIP Format (default is 7z)
+    -l <ln>         Keep <ln> days of TM1S server log files [default: -1]
+    -e <en>         Keep <en> days of TM1ProcessError log files [default: -1]
+    -z             Use ZIP Format (default is 7z)
     -c <cn>         Compression level 0-9 (0=store, 9=ultra) [default: 5]
     -a <an>         Keep <an> days of auditstore logs [default: -1]
     -h              Show this screen
@@ -160,6 +161,7 @@ class BackupService:
         keep: int = 1,
         logs: int = -1,
         auditstore: int = -1,
+        error_logs: int = -1,
         zip_format: str = '7z',
         compression_level: int = 5
     ):
@@ -174,8 +176,9 @@ class BackupService:
             sevenzip: Path to 7-Zip executable
             feeders: Whether to include feeder files
             keep: Number of backup files to retain
-            logs: Days of logs to retain (-1 means don't clean)
+            logs: Days of TM1S server logs to retain (-1 means don't clean)
             auditstore: Days of auditstore logs to retain (-1 means don't clean)
+            error_logs: Days of TM1ProcessError logs to retain (-1 means don't clean)
             zip_format: Compression format ('7z' or 'zip')
             compression_level: 7-Zip compression level 0-9 (0=store, 9=ultra)
         """
@@ -191,6 +194,7 @@ class BackupService:
         self.keep = keep
         self.logs = logs
         self.auditstore = auditstore
+        self.error_logs = error_logs
         self.zip_format = zip_format
         self.compression_level = compression_level
 
@@ -248,7 +252,10 @@ class BackupService:
             logging.info(f"Backup file retention: {self.keep} files")
 
         if self.logs > 0:
-            logging.info(f"Log file retention: {self.logs} days")
+            logging.info(f"TM1S log file retention: {self.logs} days")
+
+        if self.error_logs > 0:
+            logging.info(f"TM1ProcessError log file retention: {self.error_logs} days")
 
         if self.auditstore > 0:
             logging.info(f"Auditstore log retention: {self.auditstore} days")
@@ -292,9 +299,13 @@ class BackupService:
             if self.keep > 0:
                 self.clean_backups()
 
-            # Clean old logs if configured
+            # Clean old TM1S server logs if configured
             if self.logs > 0:
                 self.clean_logs()
+
+            # Clean old TM1ProcessError logs if configured
+            if self.error_logs > 0:
+                self.clean_process_errors()
 
             # Clean old auditstore logs if configured
             if self.auditstore > 0:
@@ -340,63 +351,59 @@ class BackupService:
         except Exception as e:
             logging.error(f"Error during backup cleanup: {e}", exc_info=True)
 
+    def _remove_older_than(self, pattern: str, days: int, label: str) -> int:
+        """
+        Remove files in the log directory matching a glob pattern that are older than `days`.
+
+        Args:
+            pattern: Glob pattern, relative to the log directory
+            days: Retention period in days
+            label: Description used in log messages (e.g. 'TM1S log')
+
+        Returns:
+            int: Number of files removed
+        """
+        logging.info(f"Cleaning {label} files in: {self.logdir}")
+
+        cutoff_time = time.time() - (days * 86400)  # Convert days to seconds
+        removed_count = 0
+
+        for file in Path(self.logdir).glob(pattern):
+            try:
+                if file.stat().st_mtime < cutoff_time:
+                    logging.info(f"Removing {label} file: {file.name}")
+                    os.remove(file)
+                    removed_count += 1
+            except OSError as e:
+                logging.error(f"Failed to remove {file.name}: {e}")
+
+        logging.info(f"{label} cleanup complete - removed {removed_count} file(s)")
+        return removed_count
+
     def clean_logs(self):
         """
-        Clean old TM1 log files based on retention period.
+        Clean old TM1S server log files (TM1S + 14 digits) based on the -l retention period.
         """
         try:
-            logging.info(f"Cleaning TM1 log directory: {self.logdir}")
-
-            cutoff_time = time.time() - (self.logs * 86400)  # Convert days to seconds
-            removed_count = 0
-
-            # Clean TM1ProcessError files
-            for file in Path(self.logdir).glob('TM1ProcessError*.*'):
-                try:
-                    if file.stat().st_mtime < cutoff_time:
-                        logging.info(f"Removing log file: {file.name}")
-                        os.remove(file)
-                        removed_count += 1
-                except OSError as e:
-                    logging.error(f"Failed to remove {file.name}: {e}")
-
-            # Clean TM1S* log files (pattern: TM1S + 14 digits)
-            for file in Path(self.logdir).glob('TM1S??????????????.*'):
-                try:
-                    if file.stat().st_mtime < cutoff_time:
-                        logging.info(f"Removing log file: {file.name}")
-                        os.remove(file)
-                        removed_count += 1
-                except OSError as e:
-                    logging.error(f"Failed to remove {file.name}: {e}")
-
-            logging.info(f"Log cleanup complete - removed {removed_count} file(s)")
-
+            self._remove_older_than('TM1S??????????????.*', self.logs, 'TM1S log')
         except Exception as e:
             logging.error(f"Error during log cleanup: {e}", exc_info=True)
 
-    def clean_auditstore(self):
+    def clean_process_errors(self):
         """
-        Clean old TM1 auditstore log files based on retention period.
+        Clean old TM1ProcessError log files based on the -e retention period.
         """
         try:
-            logging.info(f"Cleaning TM1 auditstore files in: {self.logdir}")
+            self._remove_older_than('TM1ProcessError*.*', self.error_logs, 'TM1ProcessError log')
+        except Exception as e:
+            logging.error(f"Error during process error log cleanup: {e}", exc_info=True)
 
-            cutoff_time = time.time() - (self.auditstore * 86400)  # Convert days to seconds
-            removed_count = 0
-
-            # Clean TM1AUDITSTORE* files (pattern: TM1AUDITSTORE + 14 digits)
-            for file in Path(self.logdir).glob('TM1AUDITSTORE??????????????.*'):
-                try:
-                    if file.stat().st_mtime < cutoff_time:
-                        logging.info(f"Removing auditstore file: {file.name}")
-                        os.remove(file)
-                        removed_count += 1
-                except OSError as e:
-                    logging.error(f"Failed to remove {file.name}: {e}")
-
-            logging.info(f"Auditstore cleanup complete - removed {removed_count} file(s)")
-
+    def clean_auditstore(self):
+        """
+        Clean old TM1AUDITSTORE files (TM1AUDITSTORE + 14 digits) based on the -a retention period.
+        """
+        try:
+            self._remove_older_than('TM1AUDITSTORE??????????????.*', self.auditstore, 'auditstore')
         except Exception as e:
             logging.error(f"Error during auditstore cleanup: {e}", exc_info=True)
 
@@ -459,6 +466,7 @@ def main(args: dict, base_path: str) -> bool:
         feeders = args['-f']
         keep = int(args['-k']) if args['-k'] else 1
         logs = int(args['-l']) if args['-l'] else -1
+        error_logs = int(args['-e']) if args['-e'] else -1
         auditstore = int(args['-a']) if args['-a'] else -1
         zip_format = 'zip' if args['-z'] else '7z'
         compression_level = int(args['-c']) if args['-c'] else 5
@@ -480,6 +488,7 @@ def main(args: dict, base_path: str) -> bool:
             keep=keep,
             logs=logs,
             auditstore=auditstore,
+            error_logs=error_logs,
             zip_format=zip_format,
             compression_level=compression_level
         )
