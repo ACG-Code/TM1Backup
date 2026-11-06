@@ -16,7 +16,7 @@ Options:
     -k <kn>         Keep <kn> number of backup files [default: 1]
     -l <ln>         Keep <ln> days of TM1S server log files [default: -1]
     -e <en>         Keep <en> days of TM1ProcessError log files [default: -1]
-    -z             Use ZIP Format (default is 7z)
+    -z              Use ZIP Format (default is 7z)
     -c <cn>         Compression level 0-9 (0=store, 9=ultra) [default: 5]
     -a <an>         Keep <an> days of auditstore logs [default: -1]
     -h              Show this screen
@@ -534,8 +534,8 @@ if __name__ == "__main__":
         try:
             cmd_args = docopt(__doc__, version=copyright_text)
         except SystemExit as e:
-            # docopt raises SystemExit for -h/--version (code 0) or bad args (code 1)
-            if e.code != 0:
+            # docopt raises SystemExit for -h/--version (code None) or bad args (code is the usage text)
+            if e.code not in (0, None):
                 logging.error(f"Invalid arguments - check command syntax. Exit code: {e.code}")
                 logging.error(f"Arguments received: {sys.argv[1:]}")
             sys.exit(e.code)
